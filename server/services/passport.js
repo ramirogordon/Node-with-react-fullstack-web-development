@@ -14,10 +14,27 @@ passport.use(
       callbackURL: "/auth/google/callback"
     },
     (accessToken, refreshToken, profile, done) => {
-      new User({
-        googleId: profile.id,
-        name: profile.name
-      }).save();
+      // findOne es una promesa
+      User.findOne({ googleId: profile.id }).then(existingUser => {
+        if (existingUser) {
+          // este usuario ya existe
+          console.log(
+            "existe --------------------------------------------------------------"
+          );
+          done(null, existingUser);
+        } else {
+          // este usuario no existe
+          console.log(
+            "no existe ------------------------------------------------------------"
+          );
+          new User({
+            googleId: profile.id,
+            name: `${profile.name.familyName}, ${profile.name.givenName}`
+          })
+            .save()
+            .then(user => done(null, user));
+        }
+      });
     }
   )
 );
