@@ -11,7 +11,7 @@ const Landing = () => <h2>Landing</h2>;
 const App = () => {
     return (
         <Provider store={store}>
-            <div>
+            <div className='container'>
                 <Router>
                     <div>
                         <Header />
