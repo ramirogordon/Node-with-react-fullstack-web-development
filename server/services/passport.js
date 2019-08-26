@@ -6,6 +6,11 @@ const keys = require("../config/keys");
 // nos traemos especificamente nuestro modelo de users
 const User = mongoose.model("users");
 
+passport.serializeUser((user, done) => {
+  // user.id = id de la tabla en mongoDB, es distinto al googleId
+  done(null, user.id);
+});
+
 passport.use(
   new GoogleStrategy(
     {
