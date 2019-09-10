@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import * as actions from '../store/actions';
+import { connect } from 'react-redux';
 
 class Header extends Component {
+    componentDidMount() {
+        this.props.fetchUser();
+    }
     render() {
         return(
             <nav>
@@ -19,4 +24,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default connect(null, actions)(Header);
